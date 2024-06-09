@@ -39,13 +39,14 @@ function BooksList() {
 
     return (
         <Container>
-            <Typography variant="h2" component="h1" gutterBottom>
+            <Typography variant="h2" component="h1" gutterBottom sx={{ color: '#5acccc' }}>
                 Book List
             </Typography>
             <TextField
                 label="Search Books"
                 variant="outlined"
                 fullWidth
+                sx={{ color: '#5acccc' }}
                 margin="normal"
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -70,7 +71,7 @@ function BooksList() {
                                 <Typography variant="body2" color="textSecondary" component="p">
                                     Reading Level: {book.readingLevel}
                                 </Typography>
-                                <Button variant="contained" color="primary" onClick={() => handleAddToReadingList(book)}>
+                                <Button variant="contained" sx={{ backgroundColor: '#5acccc' }} onClick={() => handleAddToReadingList(book)}>
                                     Add to Reading List
                                 </Button>
                             </CardContent>
