@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
-import { Container, Grid, Card, CardMedia, CardContent, Typography, CircularProgress, TextField, Button, List, ListItem, ListItemText, IconButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-
+import { Container, CircularProgress, Typography, TextField, Grid } from '@mui/material';
+import MainContent from './main-content';
+import Sidebar from './sidebar';
 
 const GET_BOOKS = gql`
   query GetBooks {
@@ -15,11 +15,9 @@ const GET_BOOKS = gql`
   }
 `;
 
-
 function BooksList() {
     const { loading, error, data } = useQuery(GET_BOOKS);
     const [searchTerm, setSearchTerm] = useState('');
-
     const [readingList, setReadingList] = useState<{ title: string; author: string; coverPhotoURL: string; readingLevel: string }[]>([]);
 
     const handleAddToReadingList = (book: { title: string; author: string; coverPhotoURL: string; readingLevel: string }) => {
@@ -51,51 +49,15 @@ function BooksList() {
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
             <Grid container spacing={4}>
-                {filteredBooks.map((book: { title: string; author: string; coverPhotoURL: string; readingLevel: string }, index: number) => (
-                    <Grid item key={index} xs={12} sm={6} md={4}>
-                        <Card>
-                            <CardMedia
-                                component="img"
-                                alt={book.title}
-                                height="140"
-                                image={book.coverPhotoURL}
-                                title={book.title}
-                            />
-                            <CardContent>
-                                <Typography gutterBottom variant="h5" component="div">
-                                    {book.title}
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary" component="p">
-                                    {book.author}
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary" component="p">
-                                    Reading Level: {book.readingLevel}
-                                </Typography>
-                                <Button variant="contained" sx={{ backgroundColor: '#5acccc' }} onClick={() => handleAddToReadingList(book)}>
-                                    Add to Reading List
-                                </Button>
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                ))}
+                {/* Main Content */}
+                <Grid item xs={12} sm={9}>
+                    <MainContent filteredBooks={filteredBooks} handleAddToReadingList={handleAddToReadingList} />
+                </Grid>
+                {/* Sidebar */}
+                <Grid item xs={12} sm={3}>
+                    <Sidebar readingList={readingList} handleRemoveFromReadingList={handleRemoveFromReadingList} />
+                </Grid>
             </Grid>
-            <Typography variant="h4" component="h2" gutterBottom style={{ marginTop: '2rem' }}>
-                Reading List
-            </Typography>
-            <List>
-                {readingList.map((book, index) => (
-                    <ListItem key={index} secondaryAction={
-                        <IconButton edge="end" aria-label="delete" onClick={() => handleRemoveFromReadingList(book.title)}>
-                            <DeleteIcon />
-                        </IconButton>
-                    }>
-                        <ListItemText
-                            primary={book.title}
-                            secondary={`Author: ${book.author}`}
-                        />
-                    </ListItem>
-                ))}
-            </List>
         </Container>
     );
 }
