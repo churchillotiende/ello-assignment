@@ -84,3 +84,9 @@ You can use this query to get the list of books to display in your frontend. You
 
 
 # ello-assignment
+
+Starting the frontend is a simple procedure
+-cd frontend
+-npm install
+-npm start
+-On your browser enter localhost:3000 to access the user interface
