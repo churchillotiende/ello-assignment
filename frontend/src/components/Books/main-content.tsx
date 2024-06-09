@@ -37,7 +37,7 @@ const MainContent: React.FC<MainContentProps> = ({ filteredBooks, handleAddToRea
                             <Typography variant="body2" color="textSecondary" component="p">
                                 Reading Level: {book.readingLevel}
                             </Typography>
-                            <Button variant="contained" onClick={() => handleAddToReadingList(book)}>
+                            <Button variant="contained" sx={{ backgroundColor: "#5acccc" }} onClick={() => handleAddToReadingList(book)}>
                                 Add to Reading List
                             </Button>
                         </CardContent>
